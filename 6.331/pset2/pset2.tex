@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\author{Josh Gordonson}
+\title{6.331 Pset 2}
+
+\begin{document}
+\maketitle{}
+\section{}
+\subsection{}
+%1a
+The maximum slew rate of the hold capacitor can be calculated from $\frac{I_o}{C_h}$
+\begin{align}
+Slew_{max+} & = \frac{10mA}{100pF} = 10^8 [\frac{V}{s}] \label{slw}\\
+Slew_{max-} & = \frac{9mA}{100pF} = 10^7 [\frac{V}{s}] 
+\end{align}
+The error caused by the given current imbalance ($10mA$ on top, $9mA$ on bottom) can 
+be found by modeling the incremental resistance of the diodes at their respective 
+quiescent currents, assuming a $v_D$ of $V_{TH} = 25mV$:
+\begin{align}
+r_D &= \frac{v_D}{i_D} = \frac{2V_{TH}}{I_D} \\
+r_{D_{top}} &= \frac{2KT}{5mA} = 10 \Omega \label{incres}\\
+r_{D_{bot}} &= \frac{2KT}{4.5mA} = 11.1 \Omega 
+\end{align}
+Now, we use the incremental resistive model to find the incremental error caused by 
+current mismatch in the two legs of the floating current source. To do this, we find 
+the equivalent resistance of one of the top legs in parallel with the rest of the legs in series.
+$$
+\frac{10 \Omega (2*11.1 \Omega+10 \Omega)}{20 \Omega+2*11.1 \Omega}1mA = 6mV
+$$
+\subsection{}
+%1b
+From \eqref{slw}:
+$$
+\Delta V_{Slew} = \frac{I_o}{C_{Hold}} = 10^8 \frac{V}{s}, \qquad \frac{10}{10^8 \frac{V}{s}}=100nS
+$$
+The change in voltage due to the switching lag can be calculated by multiplying the slew rate by
+$\Delta t$.
+$$
+\Delta V_{error} = \frac{I_o \Delta t}{2C_{hold}} = \frac{10^8*10^{-9}}{2} = 50mV
+$$
+\subsection{}
+To evaluate the effect of stray capacitance on each diode, we look at the equillibrium case 
+where the input and output are held at 5V.  At switching time, the diodes are reverse-biased,
+causing charge dump proportional to the revere-bias voltage.  On the input half of the diode
+network, the charge is supplied by the input signal.  On the output half of the diode network,
+ the charge is sourced from $C_{hold}$.  \\
+\\
+First, we find $\Delta V_{D_{top}}$, which is equal to the change in voltage across the top diode;
+ $\Delta V_{D_{top}} = .6-20=-20.6V$.  Next, you can find the amount of charge that is dumped due
+to the abrupt change in $V_D$ by using the relationship $Q=CV$; $\Delta Q_{d_{top}}=C_{top}\Delta
+ V_{D_{top}}=-.206nC$.  Rinse and repeat for the bottom diode; $\Delta V_{D_{bot}}=10.6V \qquad 
+\Delta Q_{d_{bot}}=.106nC$. \\
+\\
+Now you have to find the change in charge on $C_{hold}$.
+\begin{align}
+\Delta Q_{hold} &=\Delta Q_{d_{top}} + \Delta Q_{d_{bot}}=-.10nC \\
+\Delta V_{out} &= \frac{\Delta Q_{hold}}{C_{hold}}=-1V
+\end{align}
+\subsection{}
+To find the step response of the sample and hold in sample mode you need an incremental model of the diode network, replacing each diode with a resistor of value $r_d$ equal to its incremental resistance.  From there, the problem simplifies to a first order low-pass filter. From equation \eqref{incres}:
+\begin{align}
+r_d &= 10\Omega\\
+\frac{V_o}{V_i} &= \frac{1}{r_dc_hs+1}\\
+\frac{V_o}{V_i} \frac{1}{s} &= \frac{1}{r_dc_hs^2+s}\\
+ &= 1-e^{\frac{-t}{r_dc_h}}\\
+.999 &= 1-e^{\frac{-t}{r_dc_h}}\\
+ t_{0.1\%} &= -r_dc_hln(.001)\\
+\int_0^t{1-e^{\frac{-t}{r_dc_h}}dt} &= t+r_dc_he^{\frac{-t}{r_dc_h}}-r_dc_h
+\end{align}
+\section{}
+The real component of the incremental input impedance is given by the following transfer
+ function, which follows from using KCL at the emitter node with a test current on the base.
+\begin{align}
+I_{test} + I_c &= I_e, \qquad I_{test}+I_c = V_\pi\frac{1}{r_\pi\|c_\pi} + g_mV_\pi \\
+V_\pi\frac{1}{r_\pi\|c_\pi} + g_mV_\pi &= V_eC_Es ,\qquad  V_e = V_{test}-V_\pi \\
+V_{test} &= I_{test}r_\pi\|c_\pi(\frac{\frac{1}{r_\pi\|c_\pi}+g_m}{C_Es}+1) \\
+Z_{In} = \frac{V_{test}}{I_{test}} &= 
+	\frac{1+g_m r_\pi \| c_\pi}{C_E s} + r_\pi \| c_\pi, \qquad
+	r_\pi \| c_\pi = \frac{r_\pi}{r_\pi c_\pi s + 1} \\
+ &= \frac{r_\pi c_\pi s+1+g_m r_\pi}{C_E s(r_\pi c_\pi s +1)} +
+	\frac{r_\pi}{r_\pi c_\pi s + 1} \\
+ &= \frac{r_\pi(c_\pi s+C_E s+ g_m)+1}{C_E s(r_\pi c_\pi s+1)}
+	\frac{-C_E r_\pi c_\pi w^2 - C_Ejw}
+	{-C_E r_\pi c_\pi w^2 - C_Ejw} \label{plot}\\
+\Re \{Z_{In}\} &= \frac{(C_E - g_m r_\pi c_\pi)r_\pi}
+	{r_\pi^2c_\pi^2C_Ew^2+C_E} 
+\end{align}
+So, If $C_E < g_m r_\pi c_\pi$, then the incremental input resistance to the amplifier is negative for all frequencies. \\
+To plot the incremental input impedance, we use equation \eqref{plot} \\
+$$
+Z_{In} = \displaystyle\frac{\displaystyle\frac{r_\pi(c_\pi +C_E)}{r_\pi g_m + 1} s+1}
+	{\displaystyle\frac{C_E}{r_\pi g_m +1} s(r_\pi c_\pi s+1)}
+$$
+Clearly, we have a zero at $w=\frac{r_\pi(c_\pi +C_E)}{r_\pi g_m + 1} s+1$,
+ an integrator with gain $\frac{r_\pi g_m +1}{C_E} $, and a pole at $w=\frac{1}{r_\pi c_\pi}$ 
+
+\section{}
+\end{document}
+
