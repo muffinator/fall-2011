@@ -10,18 +10,18 @@
 \subsection{}
 %1a
 The maximum slew rate of the hold capacitor can be calculated from $\frac{I_o}{C_h}$
-\begin{align}
-Slew_{max+} & = \frac{10mA}{100pF} = 10^8 [\frac{V}{s}] \label{slw}\\
+\begin{align*}
+Slew_{max+} & = \frac{10mA}{100pF} = 10^8 [\frac{V}{s}] \tag{1} \label{slw}\\
 Slew_{max-} & = \frac{9mA}{100pF} = 10^7 [\frac{V}{s}] 
-\end{align}
+\end{align*}
 The error caused by the given current imbalance ($10mA$ on top, $9mA$ on bottom) can 
 be found by modeling the incremental resistance of the diodes at their respective 
 quiescent currents, assuming a $v_D$ of $V_{TH} = 25mV$:
-\begin{align}
+\begin{align*}
 r_D &= \frac{v_D}{i_D} = \frac{2V_{TH}}{I_D} \\
-r_{D_{top}} &= \frac{2KT}{5mA} = 10 \Omega \label{incres}\\
+r_{D_{top}} &= \frac{2KT}{5mA} = 10 \Omega \tag{2} \label{incres}\\
 r_{D_{bot}} &= \frac{2KT}{4.5mA} = 11.1 \Omega 
-\end{align}
+\end{align*}
 Now, we use the incremental resistive model to find the incremental error caused by 
 current mismatch in the two legs of the floating current source. To do this, we find 
 the equivalent resistance of one of the top legs in parallel with the rest of the legs in series.
@@ -53,15 +53,15 @@ to the abrupt change in $V_D$ by using the relationship $Q=CV$; $\Delta Q_{d_{to
 \Delta Q_{d_{bot}}=.106nC$. \\
 \\
 Now you have to find the change in charge on $C_{hold}$.
-\begin{align}
+\begin{align*}
 \Delta Q_{hold} &=\Delta Q_{d_{top}} + \Delta Q_{d_{bot}}=-.10nC \\
 \Delta V_{out} &= \frac{\Delta Q_{hold}}{C_{hold}}=-1V
-\end{align}
+\end{align*}
 \subsection{}
 To find the step response of the sample and hold in sample mode you need an incremental model of the 
 diode network, replacing each diode with a resistor of value $r_d$ equal to its incremental resistance.
 From there, the problem simplifies to a first order low-pass filter. From equation \eqref{incres}:
-\begin{align}
+\begin{align*}
 r_d &= 10\Omega\\
 \frac{V_o}{V_i} &= \frac{1}{r_dc_hs+1}\\
 \frac{V_o}{V_i} \frac{1}{s} &= \frac{1}{r_dc_hs^2+s}\\
@@ -69,11 +69,11 @@ r_d &= 10\Omega\\
 .999 &= 1-e^{\frac{-t}{r_dc_h}}\\
  t_{0.1\%} &= -r_dc_hln(.001)\\
 \int_0^t{1-e^{\frac{-t}{r_dc_h}}dt} &= t+r_dc_he^{\frac{-t}{r_dc_h}}-r_dc_h
-\end{align}
+\end{align*}
 \section{}
 The real component of the incremental input impedance is given by the following transfer
  function, which follows from using KCL at the emitter node with a test current on the base.
-\begin{align}
+\begin{align*}
 I_{test} + I_c &= I_e, \qquad I_{test}+I_c = V_\pi\frac{1}{r_\pi\|c_\pi} + g_mV_\pi \\
 V_\pi\frac{1}{r_\pi\|c_\pi} + g_mV_\pi &= V_eC_Es ,\qquad  V_e = V_{test}-V_\pi \\
 V_{test} &= I_{test}r_\pi\|c_\pi(\frac{\frac{1}{r_\pi\|c_\pi}+g_m}{C_Es}+1) \\
@@ -84,10 +84,10 @@ Z_{In} = \frac{V_{test}}{I_{test}} &=
 	\frac{r_\pi}{r_\pi c_\pi s + 1} \\
  &= \frac{r_\pi(c_\pi s+C_E s+ g_m)+1}{C_E s(r_\pi c_\pi s+1)}
 	\frac{-C_E r_\pi c_\pi w^2 - C_Ejw}
-	{-C_E r_\pi c_\pi w^2 - C_Ejw} \label{plot}\\
+	{-C_E r_\pi c_\pi w^2 - C_Ejw} \tag{3} \label{plot}\\
 \Re \{Z_{In}\} &= \frac{(C_E - g_m r_\pi c_\pi)r_\pi}
 	{r_\pi^2c_\pi^2C_Ew^2+C_E} 
-\end{align}
+\end{align*}
 So, If $C_E < g_m r_\pi c_\pi$, then the incremental input resistance to the amplifier is negative for all frequencies. \\
 To plot the incremental input impedance, we use equation \eqref{plot} \\
 $$
@@ -96,24 +96,29 @@ Z_{In} = \displaystyle\frac{\displaystyle\frac{r_\pi(c_\pi +C_E)}{r_\pi g_m + 1}
 $$
 Clearly, we have a zero at $w=\frac{r_\pi(c_\pi +C_E)}{r_\pi g_m + 1} s+1$,
  an integrator with gain $\frac{r_\pi g_m +1}{C_E} $, and a pole at $w=\frac{1}{r_\pi c_\pi}$ 
-
+\newpage{}
 \section{}
 Given the specifications, we're to design a sample and hold with a 'hold gain' of $10^9*1nS$.  
 We can think of this in exactly the same way as we did when we ganged up a bunch of gain stages
 for the vertical amplifier in an oscilloscope.  \\
 \\
 To minimize the $V_{hold}$ error, $V_e$, we need to sum all of the $V_e$ from each stage.\\
-\begin{align}
+\begin{align*}
 V_{e_1} &=\alpha \frac{\tau_h}{\tau_s}, \qquad \beta = \frac{\tau_h}{\tau_s}\\
 V_{e_2} &=\alpha \beta\\
 V_{e_3} &= \vdots 
-\end{align} 
+\end{align*} 
 Here $\alpha$ is the constant of proportionality between $\beta$ and $V_e$.  After a sum, we get that the total 
 error is $\sum_n{V_{e_n}}=n\alpha \beta$.  Additionally, we know that $\beta^n=10^9$, since the 'hold gain' is $10^9$.
 Assuming $\alpha=1$,
-\begin{align}
+\begin{align*}
 \beta^n &= 10^9 \\
 \beta &= 10^{9/n} \\
-\end{align}
+\frac{d}{dn}n10^{9/n} &= (n-9ln10) \frac{10^{9/n}}{n} \\
+&= 0, \qquad to find minimum \\
+n-9ln10 &= 0 \\
+n &= 9ln10 = 21 stages \\
+\displaystyle 10^{\frac{9}{9ln10}} &= e [\frac{gain}{stage}]
+\end{align*}
 \end{document}
 
