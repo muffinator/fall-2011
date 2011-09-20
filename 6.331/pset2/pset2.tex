@@ -58,7 +58,9 @@ Now you have to find the change in charge on $C_{hold}$.
 \Delta V_{out} &= \frac{\Delta Q_{hold}}{C_{hold}}=-1V
 \end{align}
 \subsection{}
-To find the step response of the sample and hold in sample mode you need an incremental model of the diode network, replacing each diode with a resistor of value $r_d$ equal to its incremental resistance.  From there, the problem simplifies to a first order low-pass filter. From equation \eqref{incres}:
+To find the step response of the sample and hold in sample mode you need an incremental model of the 
+diode network, replacing each diode with a resistor of value $r_d$ equal to its incremental resistance.
+From there, the problem simplifies to a first order low-pass filter. From equation \eqref{incres}:
 \begin{align}
 r_d &= 10\Omega\\
 \frac{V_o}{V_i} &= \frac{1}{r_dc_hs+1}\\
@@ -96,6 +98,22 @@ Clearly, we have a zero at $w=\frac{r_\pi(c_\pi +C_E)}{r_\pi g_m + 1} s+1$,
  an integrator with gain $\frac{r_\pi g_m +1}{C_E} $, and a pole at $w=\frac{1}{r_\pi c_\pi}$ 
 
 \section{}
-Given the specifications, we're to design a sample and hold with a 'hold gain' of $10^9*1nS$.  We can think of this in exactly the same way as we did when     
+Given the specifications, we're to design a sample and hold with a 'hold gain' of $10^9*1nS$.  
+We can think of this in exactly the same way as we did when we ganged up a bunch of gain stages
+for the vertical amplifier in an oscilloscope.  \\
+\\
+To minimize the $V_{hold}$ error, $V_e$, we need to sum all of the $V_e$ from each stage.\\
+\begin{align}
+V_{e_1} &=\alpha \frac{\tau_h}{\tau_s}, \qquad \beta = \frac{\tau_h}{\tau_s}\\
+V_{e_2} &=\alpha \beta\\
+V_{e_3} &= \vdots 
+\end{align} 
+Here $\alpha$ is the constant of proportionality between $\beta$ and $V_e$.  After a sum, we get that the total 
+error is $\sum_n{V_{e_n}}=n\alpha \beta$.  Additionally, we know that $\beta^n=10^9$, since the 'hold gain' is $10^9$.
+Assuming $\alpha=1$,
+\begin{align}
+\beta^n &= 10^9 \\
+\beta &= 10^{9/n} \\
+\end{align}
 \end{document}
 
