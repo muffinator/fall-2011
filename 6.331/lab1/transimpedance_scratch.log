@@ -1,0 +1,26 @@
+Circuit: * Z:\home\muffin\Documents\fall-2011\6.331\lab1\transimpedance_scratch.asc
+
+WARNING: Node NC_01 is floating.
+
+WARNING: Less than two connections to node NC_01.  This node is used by C1.
+Direct Newton iteration for .op point succeeded.
+
+Date: Wed Oct 19 10:50:00 2011
+Total elapsed time: 0.796 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 8038
+traniter = 8025
+tranpoints = 3483
+accept = 3140
+rejected = 343
+matrix size = 108
+fillins = 110
+solver = Normal
+Thread vector: 102.3/77.3[2] 37.4/23.4[2] 12.8/10.1[2] 6.0/12.0[1]  2592/500
+Matrix Compiler1: 15.5 KB object code size  25.9/19.7/[8.2]
+Matrix Compiler2: off  [11.5]/15.5/25.6
+
+
