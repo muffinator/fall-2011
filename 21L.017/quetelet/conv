@@ -1,0 +1,26 @@
+#! /bin/bash
+
+for f in pg_*.pdf
+do
+convert -quiet -monochrome -normalize -density 600 "$f" "$f.png"
+done
+for f in pg_*.png
+do
+echo "processing $f ..."
+convert "$f" "$f.bmp"
+cuneiform -l eng -f hocr -o "$f.hocr" "$f.bmp"
+convert -blur 0.4 "$f" "$f.bmp"
+hocr2pdf -i "$f.bmp" -s -o "$f.pdf" < "$f.hocr"
+rm -f "$f" "$f.bmp" "$f.hocr"
+done
+echo "InfoKey: Author" > in.info
+echo "InfoValue: Quetelet" >> in.info
+echo "InfoKey: Title" >> in.info
+echo "InfoValue: A Treatise on Man and the Development of His Faculties" >> in.info
+echo "InfoKey: Creator" >> in.info
+echo "InfoValue: Josh Gordonson" >> in.info
+pdfjoin --fitpaper --tidy --outfile "$1.ocr1.pdf" "pg_*.png.pdf"
+rm -f pg_*.png.pdf
+pdftk "$1.ocr1.pdf" update_info doc_data.txt output "$1.ocr2.pdf"
+pdftk "$1.ocr2.pdf" update_info in.info output "$1-ocr.pdf"
+rm -f "$1.ocr1.pdf" "$1.ocr2.pdf" doc_data.txt in.info
