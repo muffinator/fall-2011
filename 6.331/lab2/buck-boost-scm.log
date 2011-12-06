@@ -1,0 +1,23 @@
+Circuit: * Z:\home\muffin\Documents\fall-2011\6.331\lab2\buck-boost-scm.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Mon Dec 05 20:13:57 2011
+Total elapsed time: 245.688 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 1595914
+traniter = 1595865
+tranpoints = 440473
+accept = 317871
+rejected = 122602
+matrix size = 217
+fillins = 341
+solver = Normal
+Thread vector: 106.8/80.3[2] 32.4/22.6[2] 29.7/16.7[2] 5.1/10.0[1]  2592/500
+Matrix Compiler1: 30.7 KB object code size  32.6/21.5/[9.4]
+Matrix Compiler2: off  [12.5]/17.0/36.5
+
+
