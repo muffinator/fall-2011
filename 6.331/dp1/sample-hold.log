@@ -1,0 +1,23 @@
+Circuit: * Z:\home\muffin\Documents\fall-2011\6.331\dp1\sample-hold.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Sun Dec 04 00:46:20 2011
+Total elapsed time: 0.830 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 3873
+traniter = 3851
+tranpoints = 1485
+accept = 1371
+rejected = 114
+matrix size = 118
+fillins = 130
+solver = Normal
+Thread vector: 51.7/45.5[2] 17.2/13.6[2] 9.8/7.7[2] 3.9/268.6[1]  2592/500
+Matrix Compiler1: 14.6 KB object code size  13.3/10.6/[4.9]
+Matrix Compiler2: off  [6.5]/8.6/19.2
+
+
